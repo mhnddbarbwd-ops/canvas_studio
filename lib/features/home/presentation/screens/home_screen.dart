@@ -1,88 +1,146 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../widgets/size_picker_sheet.dart';
 
-class SizePickerSheet extends StatelessWidget {
-  const SizePickerSheet({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'اختر أبعاد المشروع',
-            style: GoogleFonts.tajawal(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
+    return Scaffold(
+      backgroundColor: AppColors.scaffoldBackground,
+      appBar: AppBar(
+        title: Text(
+          'Canvas Studio',
+          style: GoogleFonts.tajawal(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            color: AppColors.textPrimary,
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.surfaceWhite,
+        elevation: 0,
+        scrolledUnderElevation: 1,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildSizeOption(context, 'مربع', 400, 400),
-              _buildSizeOption(context, '16:9', 480, 270),
-              _buildSizeOption(context, '4:3', 400, 300),
+              const SizedBox(height: 20),
+              _buildProjectCard(
+                context,
+                icon: Icons.image_outlined,
+                title: 'تحرير صورة',
+                subtitle: 'ابدأ بتصميم صورة جديدة',
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: AppColors.surfaceWhite,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(24)),
+                    ),
+                    builder: (context) => const SizePickerSheet(),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildProjectCard(
+                context,
+                icon: Icons.videocam_outlined,
+                title: 'تحرير فيديو',
+                subtitle: 'قريباً...',
+                enabled: false,
+                onTap: null,
+              ),
             ],
           ),
-          const SizedBox(height: 12),
-          _buildSizeOption(context, 'مخصص', 400, 400, isCustom: true),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildSizeOption(
-    BuildContext context,
-    String label,
-    double width,
-    double height, {
-    bool isCustom = false,
+  Widget _buildProjectCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback? onTap,
+    bool enabled = true,
   }) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-        Navigator.pushNamed(
-          context,
-          '/editor',
-          arguments: {'width': width, 'height': height},
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceWhite,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.editorCanvasBorder),
-        ),
-        child: Column(
-          children: [
-            Icon(
-              isCustom ? Icons.aspect_ratio : Icons.crop_original,
-              color: AppColors.primaryBlue,
-              size: 28,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              style: GoogleFonts.tajawal(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Opacity(
+        opacity: enabled ? 1.0 : 0.5,
+        child: Card(
+          margin: EdgeInsets.zero,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: AppColors.editorCanvasBorder,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryBlueVeryLight,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(
+                      icon,
+                      size: 36,
+                      color:
+                          enabled ? AppColors.primaryBlue : AppColors.textHint,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: GoogleFonts.tajawal(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: enabled
+                                ? AppColors.textPrimary
+                                : AppColors.textHint,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          subtitle,
+                          style: GoogleFonts.tajawal(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 18,
+                    color: enabled
+                        ? AppColors.textSecondary
+                        : AppColors.textHint,
+                  ),
+                ],
               ),
             ),
-            Text(
-              '${width.toInt()}×${height.toInt()}',
-              style: GoogleFonts.tajawal(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
