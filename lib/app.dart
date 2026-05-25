@@ -16,8 +16,8 @@ class PhotoEditorApp extends StatelessWidget {
       initialRoute: '/splash',
       routes: {
         '/splash': (context) => const SplashScreen(),
-        '/': (context) => const HomeScreen(),
-        '/editor': (context) => const EditorScreen(),
+        '/': (context) => HomeScreen(),
+        '/editor': (context) => EditorScreen(),
       },
     );
   }
