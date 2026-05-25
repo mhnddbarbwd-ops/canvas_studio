@@ -9,16 +9,29 @@ class TopToolbar extends StatelessWidget {
     return Container(
       height: 56,
       color: AppColors.toolbarBackground,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
+            icon: const Icon(Icons.arrow_back, color: AppColors.iconColor),
+            tooltip: 'العودة للمشاريع',
+            onPressed: () => Navigator.pop(context),
+          ),
+          const Spacer(),
+          IconButton(
             icon: const Icon(Icons.undo, color: AppColors.iconColor),
+            tooltip: 'تراجع',
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.save_alt, color: AppColors.iconColor),
+            icon: const Icon(Icons.redo, color: AppColors.iconColor),
+            tooltip: 'إعادة',
+            onPressed: () {},
+          ),
+          const SizedBox(width: 4),
+          IconButton(
+            icon: Icon(Icons.save_alt, color: AppColors.accentBlueLight),
+            tooltip: 'تصدير',
             onPressed: () {},
           ),
         ],
