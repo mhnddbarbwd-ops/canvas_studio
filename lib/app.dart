@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'core/theme/app_theme.dart';
+import 'features/splash/presentation/screens/splash_screen.dart';
 import 'features/home/presentation/screens/home_screen.dart';
 import 'features/editor/presentation/screens/editor_screen.dart';
 
@@ -13,8 +13,9 @@ class PhotoEditorApp extends StatelessWidget {
       title: 'Canvas Studio',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: '/',
+      initialRoute: '/splash',
       routes: {
+        '/splash': (context) => const SplashScreen(),
         '/': (context) => const HomeScreen(),
         '/editor': (context) => const EditorScreen(),
       },

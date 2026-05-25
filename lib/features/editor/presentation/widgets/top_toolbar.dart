@@ -8,8 +8,17 @@ class TopToolbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 56,
-      color: AppColors.toolbarBackground,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: AppColors.editorToolbar,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
           IconButton(
@@ -30,7 +39,8 @@ class TopToolbar extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           IconButton(
-            icon: Icon(Icons.save_alt, color: AppColors.accentBlueLight),
+            icon: const Icon(Icons.download_rounded,
+                color: AppColors.primaryBlue),
             tooltip: 'تصدير',
             onPressed: () {},
           ),

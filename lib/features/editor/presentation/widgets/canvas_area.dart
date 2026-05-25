@@ -3,7 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/canvas_provider.dart';
 
 class CanvasArea extends ConsumerWidget {
-  const CanvasArea({super.key});
+  final double canvasWidth;
+  final double canvasHeight;
+
+  const CanvasArea({
+    super.key,
+    required this.canvasWidth,
+    required this.canvasHeight,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,9 +22,12 @@ class CanvasArea extends ConsumerWidget {
       maxScale: 5.0,
       child: Center(
         child: Container(
-          width: 400,
-          height: 400,
-          color: Colors.white,
+          width: canvasWidth,
+          height: canvasHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.grey.shade300),
+          ),
           child: Stack(
             children: canvasState.layers.map((layer) {
               return Positioned(

@@ -8,12 +8,23 @@ class EditorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // استخراج الأبعاد من الوسائط التي تم تمريرها
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, double>?;
+    final canvasWidth = args?['width'] ?? 400;
+    final canvasHeight = args?['height'] ?? 400;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             const TopToolbar(),
-            const Expanded(child: CanvasArea()),
+            Expanded(
+              child: CanvasArea(
+                canvasWidth: canvasWidth,
+                canvasHeight: canvasHeight,
+              ),
+            ),
             const BottomToolbar(),
           ],
         ),

@@ -14,9 +14,9 @@ class BottomToolbar extends ConsumerWidget {
     return Container(
       height: 80,
       decoration: const BoxDecoration(
-        color: AppColors.toolbarBackground,
+        color: AppColors.editorToolbar,
         border: Border(
-          top: BorderSide(color: AppColors.surfaceDark, width: 1),
+          top: BorderSide(color: AppColors.editorCanvasBorder, width: 1),
         ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -52,10 +52,11 @@ class BottomToolbar extends ConsumerWidget {
                 type: LayerType.rectangle,
                 x: 20.0 + (ref.read(canvasProvider).layers.length * 10),
                 y: 20.0 + (ref.read(canvasProvider).layers.length * 10),
-                color: AppColors.accentBlue,
+                color: AppColors.primaryBlue,
               );
               ref.read(canvasProvider.notifier).addLayer(newLayer);
             },
+            isSelected: true,
           ),
         ],
       ),
@@ -66,22 +67,32 @@ class BottomToolbar extends ConsumerWidget {
     required IconData icon,
     required String label,
     required VoidCallback onTap,
+    bool isSelected = false,
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(14),
+      splashColor: AppColors.primaryBlueVeryLight,
+      highlightColor: AppColors.primaryBlueLight.withOpacity(0.3),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: AppColors.iconColor, size: 26),
+            Icon(
+              icon,
+              color: isSelected ? AppColors.primaryBlue : AppColors.iconColor,
+              size: 26,
+            ),
             const SizedBox(height: 4),
             Text(
               label,
               style: GoogleFonts.tajawal(
-                color: AppColors.iconColor,
+                color:
+                    isSelected ? AppColors.primaryBlue : AppColors.iconColor,
                 fontSize: 12,
+                fontWeight:
+                    isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             ),
           ],
